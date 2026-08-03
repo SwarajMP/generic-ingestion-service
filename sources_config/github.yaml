@@ -1,0 +1,26 @@
+# Bearer token auth (optional -- unauthenticated requests work too, just at
+# GitHub's lower 60 req/hr rate limit instead of 5000). Pagination via the
+# RFC 5988 Link header, a structurally different mechanism from PokeAPI's
+# body-embedded "next" field.
+name: github
+base_url: https://api.github.com
+auth:
+  type: bearer
+  token_env: GITHUB_TOKEN
+retry:
+  max_attempts: 4
+  backoff_factor: 1.0
+rate_limit:
+  requests_per_second: 1
+timeout_seconds: 15
+endpoints:
+  - name: anthropic_repos
+    path: /orgs/anthropics/repos
+    method: GET
+    params:
+      per_page: 20
+    pagination:
+      type: link_header
+      max_pages: 3
+    records_path: "$"        # response body is a top-level JSON array
+    id_field: id

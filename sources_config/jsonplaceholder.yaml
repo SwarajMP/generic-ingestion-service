@@ -1,0 +1,21 @@
+# No auth, no pagination (the whole collection comes back in one response).
+# Included to prove the "add a source = add a YAML file" claim: this is a
+# third, structurally simpler API added with zero code changes.
+name: jsonplaceholder
+base_url: https://jsonplaceholder.typicode.com
+auth:
+  type: none
+retry:
+  max_attempts: 3
+  backoff_factor: 0.5
+rate_limit:
+  requests_per_second: 5
+timeout_seconds: 15
+endpoints:
+  - name: posts
+    path: /posts
+    method: GET
+    pagination:
+      type: none
+    records_path: "$"
+    id_field: id

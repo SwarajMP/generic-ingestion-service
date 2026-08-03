@@ -1,0 +1,23 @@
+# No auth. Pagination via a "next" URL embedded in the response body.
+name: pokeapi
+base_url: https://pokeapi.co/api/v2
+auth:
+  type: none
+retry:
+  max_attempts: 3
+  backoff_factor: 0.5
+rate_limit:
+  requests_per_second: 5
+timeout_seconds: 15
+endpoints:
+  - name: pokemon
+    path: /pokemon
+    method: GET
+    params:
+      limit: 20
+    pagination:
+      type: next_url
+      next_field: next
+      max_pages: 5          # caps demo runs at 100 records; raise for a full pull
+    records_path: results
+    id_field: name
