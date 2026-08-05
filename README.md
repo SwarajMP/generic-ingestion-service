@@ -6,6 +6,19 @@ file, not a code change.** Demonstrated live against three structurally
 different public APIs (different auth mechanisms and different pagination
 styles) with zero source-specific code.
 
+## Live hosted instance
+
+**https://intentwise-ingestion-0z4w.onrender.com**
+
+- Swagger UI: https://intentwise-ingestion-0z4w.onrender.com/docs
+- `GET /sources` — configured sources
+- `POST /ingest/{source}/{endpoint}` — trigger ingestion (e.g. `/ingest/pokeapi/pokemon`)
+- `GET /runs` — ingestion run history
+
+Hosted on Render's free tier, which spins the instance down after ~15 minutes
+of inactivity — the first request after a period of idleness may take
+30-50 seconds to wake it back up. Subsequent requests are fast.
+
 ## How to run it
 
 ### Option A: Docker Compose (recommended, single command)
