@@ -2,6 +2,7 @@ import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import RedirectResponse
 
 from app.config import settings
 from app.db import Base, SessionLocal, engine
@@ -28,6 +29,11 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Generic Data Ingestion Service", lifespan=lifespan)
+
+
+@app.get("/", include_in_schema=False)
+def root():
+    return RedirectResponse(url="/docs")
 
 
 @app.get("/health")
